@@ -9,7 +9,6 @@ def crear_prestamo(prestamo):
 
 def listar_prestamos():
     return prestamos
-
 def eliminar_prestamo(id_prestamo):
     global prestamos
     prestamos = [p for p in prestamos if p.id_prestamo != id_prestamo]
