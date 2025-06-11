@@ -22,4 +22,24 @@ def mostrar_menu():
             nombre = input("Nombre: ")
             cliente = Cliente(id_cliente, nombre)
             clientes_dao.registrar_cliente(cliente)
-            print("Cliente registrado.")
+            print("Cliente registrado.") 
+            
+        elif opcion == "2":
+            id_prestamo = input("ID Préstamo: ")
+            id_cliente = input("ID Cliente: ")
+            monto = input("Monto: ")
+            interes = input("Tasa interés (%): ")
+            cuotas = input("Número de cuotas: ")
+            frecuencia = input("Frecuencia de pago: ")
+            prestamo = Prestamo(id_prestamo, id_cliente, monto, interes, cuotas, frecuencia)
+            prestamos_dao.crear_prestamo(prestamo)
+            print("Préstamo creado.")
+
+        elif opcion == "3":
+            id_pago = input("ID Pago: ")
+            id_prestamo = input("ID Préstamo: ")
+            monto_pagado = input("Monto pagado: ")
+            fecha = input("Fecha (dd-mm-aaaa): ")
+            pago = Pago(id_pago, id_prestamo, monto_pagado, fecha)
+            pagos_dao.registrar_pago(pago)
+            print("Pago registrado.")
