@@ -43,3 +43,27 @@ def mostrar_menu():
             pago = Pago(id_pago, id_prestamo, monto_pagado, fecha)
             pagos_dao.registrar_pago(pago)
             print("Pago registrado.")
+
+        elif opcion == "4":
+            for c in clientes_dao.listar_clientes():
+                print(f"{c.id_cliente} - {c.nombre}")
+
+        elif opcion == "5":
+            for p in prestamos_dao.listar_prestamos():
+                print(f"{p.id_prestamo} - Cliente: {p.id_cliente} - Monto: {p.monto} - Estado: {p.estado}")
+
+        elif opcion == "6":
+            for p in pagos_dao.listar_pagos():
+                print(f"{p.id_pago} - Préstamo: {p.id_prestamo} - Monto: {p.monto_pagado} - Fecha: {p.fecha}")
+
+        elif opcion == "7":
+            print("Saliendo...")
+            break
+
+        else:
+            print("Opción no válida.")
+
+if __name__ == "__main__":
+    mostrar_menu()
+
+ 
