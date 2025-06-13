@@ -1,8 +1,8 @@
-from modulo.cliente import Cliente
-from modulo.prestamo import Prestamo
-from modulo.pago import Pago
+from credicontrol1.modulo.cliente import Cliente
+from credicontrol1.modulo.prestamo import Prestamo
+from credicontrol1.modulo.pago import Pago
 
-from dao import clientes_dao, prestamos_dao, pagos_dao
+from credicontrol1.dao import clientes_dao, prestamos_dao, pagos_dao
 
 def mostrar_menu():
     while True:
