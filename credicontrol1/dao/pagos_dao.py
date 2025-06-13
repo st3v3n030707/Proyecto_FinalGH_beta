@@ -1,4 +1,4 @@
-from modulo.pago import Pago
+from credicontrol1.modulo.pago import Pago
 from modulo.archivo import guardar_en_archivo, leer_desde_archivo
 
 pagos = leer_desde_archivo("data/pagos.txt", Pago)
