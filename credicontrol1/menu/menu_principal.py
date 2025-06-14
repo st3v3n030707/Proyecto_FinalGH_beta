@@ -6,14 +6,18 @@ from credicontrol1.dao import clientes_dao, prestamos_dao, pagos_dao
 
 def mostrar_menu():
     while True:
-        print("\n--- CrediControl ---")
         print("1. Registrar Cliente")
         print("2. Crear Préstamo")
         print("3. Registrar Pago")
         print("4. Ver Clientes")
         print("5. Ver Préstamos")
         print("6. Ver Pagos")
-        print("7. Salir")
+        print("7. Eliminar Cliente")
+        print("8. Eliminar Préstamo")
+        print("9. Eliminar Pago")
+        print("10. Ver Detalles de un Préstamo")
+        print("11. Salir")
+
 
         opcion = input("Seleccione una opción: ")
 
@@ -57,6 +61,42 @@ def mostrar_menu():
                 print(f"{p.id_pago} - Préstamo: {p.id_prestamo} - Monto: {p.monto_pagado} - Fecha: {p.fecha}")
 
         elif opcion == "7":
+            for c in clientes_dao.listar_clientes():
+                print(f"{c.id_cliente} - {c.nombre}")
+            id_cliente = input("Ingrese el ID del cliente a eliminar: ")
+            clientes_dao.eliminar_cliente(id_cliente)
+            print("Cliente eliminado.")
+
+        elif opcion == "8":
+            for p in prestamos_dao.listar_prestamos():
+                print(f"{p.id_prestamo} - Cliente: {p.id_cliente} - Monto: {p.monto}")
+            id_prestamo = input("Ingrese el ID del préstamo a eliminar: ")
+            prestamos_dao.eliminar_prestamo(id_prestamo)
+            print("Préstamo eliminado.")
+
+        elif opcion == "9":
+            for p in pagos_dao.listar_pagos():
+                print(f"{p.id_pago} - Préstamo: {p.id_prestamo} - Monto: {p.monto_pagado}")
+            id_pago = input("Ingrese el ID del pago a eliminar: ")
+            pagos_dao.eliminar_pago(id_pago)
+            print("Pago eliminado.")
+
+        elif opcion == "10":
+            id_prestamo = input("Ingrese el ID del préstamo: ")
+            prestamo = prestamos_dao.buscar_prestamo(id_prestamo)
+            if prestamo:
+                total = prestamo.monto + (prestamo.monto * prestamo.tasa_interes / 100)
+                pagado = pagos_dao.total_pagado_por_prestamo(id_prestamo)
+                print(f"Monto del préstamo: C${prestamo.monto:.2f}")
+                print(f"Interés: {prestamo.tasa_interes}%")
+                print(f"Total a pagar: C${total:.2f}")
+                print(f"Total pagado: C${pagado:.2f}")
+                print(f"Estado del préstamo: {prestamo.estado}")
+            else:
+                 print("⚠️ Préstamo no encontrado.")
+
+
+        elif opcion == "11":
             print("Saliendo...")
             break
 
