@@ -31,7 +31,7 @@ def registrar_pago(pago):
     pagos.append(pago)
     guardar_en_archivo("credicontrol1/data/pagos.txt", pagos)
 
-    
+
 def listar_pagos():
     return pagos
 
