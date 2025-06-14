@@ -1,5 +1,5 @@
 from credicontrol1.modulo.cliente import Cliente
-from modulo.archivo import guardar_en_archivo, leer_desde_archivo
+from credicontrol1.modulo.archivo import guardar_en_archivo, leer_desde_archivo
 
 clientes = leer_desde_archivo("data/clientes.txt", Cliente)
 
