@@ -31,9 +31,9 @@ def mostrar_menu():
             interes = input("Tasa interés (%): ")
             cuotas = input("Número de cuotas: ")
             frecuencia = input("Frecuencia de pago: ")
-            prestamo = Prestamo(id_prestamo, id_cliente, monto, interes, cuotas, frecuencia)
+            fecha_prestamo = input("Fecha del préstamo (dd-mm-aaaa): ")
+            prestamo = Prestamo(id_prestamo, id_cliente, monto, interes, cuotas, frecuencia, fecha_prestamo)
             prestamos_dao.crear_prestamo(prestamo)
-            print("Préstamo creado.")
 
         elif opcion == "3":
             id_pago = input("ID Pago: ")
