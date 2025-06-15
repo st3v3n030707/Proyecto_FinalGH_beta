@@ -3,13 +3,11 @@ from credicontrol1.modulo.archivo import guardar_en_archivo, leer_desde_archivo
 from datetime import datetime, timedelta
 from credicontrol1.dao import prestamos_dao  
 
-pagos = leer_desde_archivo("data/pagos.txt", Pago)
+RUTA_PAGOS = "credicontrol1/data/pagos.txt"
+pagos = leer_desde_archivo(RUTA_PAGOS, Pago)
 
 def registrar_pago(pago):
     prestamo = prestamos_dao.buscar_prestamo(pago.id_prestamo)
-    pagos.append(pago)
-    guardar_en_archivo("credicontrol1/data/pagos.txt", pagos)
-    prestamos_dao.actualizar_estado_prestamos() 
 
     if prestamo:
         # Calcular fecha límite del primer pago según frecuencia
@@ -32,8 +30,8 @@ def registrar_pago(pago):
             pago.monto_pagado += mora
 
     pagos.append(pago)
-    guardar_en_archivo("credicontrol1/data/pagos.txt", pagos)
-
+    guardar_en_archivo(RUTA_PAGOS, pagos)
+    prestamos_dao.actualizar_estado_prestamos()  # ✅ Esto lo necesitás
 
 def listar_pagos():
     return pagos
@@ -41,10 +39,11 @@ def listar_pagos():
 def eliminar_pago(id_pago):
     global pagos
     pagos = [p for p in pagos if p.id_pago != id_pago]
-    guardar_en_archivo("data/pagos.txt", pagos)
+    guardar_en_archivo(RUTA_PAGOS, pagos)
 
 def pagos_por_prestamo(id_prestamo):
     return [p for p in pagos if p.id_prestamo == id_prestamo]
 
 def total_pagado_por_prestamo(id_prestamo):
     return sum(p.monto_pagado for p in pagos if p.id_prestamo == id_prestamo)
+

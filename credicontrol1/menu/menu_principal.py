@@ -34,7 +34,19 @@ def mostrar_menu():
             monto = input("Monto: ")
             interes = input("Tasa interés (%): ")
             cuotas = input("Número de cuotas: ")
-            frecuencia = input("Frecuencia de pago: ")
+            print("1. Semanal")
+            print("2. Quincenal")
+            print("3. Mensual")
+            frecuencia_opcion = input("Seleccione (1/2/3): ")
+
+            if frecuencia_opcion == "1":
+                frecuencia = "semanal"
+            elif frecuencia_opcion == "2":
+                frecuencia = "quincenal"
+            elif frecuencia_opcion == "3":
+                frecuencia = "mensual"
+            else:
+                frecuencia = "mensual"  # valor por defecto si el usuario se equivoca
             fecha_prestamo = input("Fecha del préstamo (dd-mm-aaaa): ")
             prestamo = Prestamo(id_prestamo, id_cliente, monto, interes, cuotas, frecuencia, fecha_prestamo)
             prestamos_dao.crear_prestamo(prestamo)
@@ -54,11 +66,11 @@ def mostrar_menu():
 
         elif opcion == "5":
             for p in prestamos_dao.listar_prestamos():
-                print(f"{p.id_prestamo} - Cliente: {p.id_cliente} - Monto: {p.monto} - Estado: {p.estado}")
+                print(f"{p.id_prestamo} - Cliente: {p.id_cliente} - Monto: C${p.monto} - Estado: {p.estado} - Fecha: {p.fecha_prestamo}")
 
         elif opcion == "6":
             for p in pagos_dao.listar_pagos():
-                print(f"{p.id_pago} - Préstamo: {p.id_prestamo} - Monto: {p.monto_pagado} - Fecha: {p.fecha}")
+                print(f"{p.id_pago} - Préstamo: {p.id_prestamo} - Monto: C${p.monto_pagado} - Fecha: {p.fecha}")
 
         elif opcion == "7":
             for c in clientes_dao.listar_clientes():
@@ -87,21 +99,28 @@ def mostrar_menu():
             if prestamo:
                 total = prestamo.monto + (prestamo.monto * prestamo.tasa_interes / 100)
                 pagado = pagos_dao.total_pagado_por_prestamo(id_prestamo)
+                restante = total - pagado
+
+                print(f"ID del préstamo: {prestamo.id_prestamo}")
+                print(f"ID del cliente: {prestamo.id_cliente}")
+                print(f"Fecha del préstamo: {prestamo.fecha_prestamo}")
                 print(f"Monto del préstamo: C${prestamo.monto:.2f}")
                 print(f"Interés: {prestamo.tasa_interes}%")
                 print(f"Total a pagar: C${total:.2f}")
                 print(f"Total pagado: C${pagado:.2f}")
+                print(f"Saldo pendiente: C${restante:.2f}")
                 print(f"Estado del préstamo: {prestamo.estado}")
             else:
-                 print("⚠️ Préstamo no encontrado.")
+                print("⚠️ Préstamo no encontrado.")
+
 
 
         elif opcion == "11":
-            print("Saliendo...")
-            break
+          print("Saliendo...")
+          break
 
         else:
-            print("Opción no válida.")
+          print("Opción no válida.")
 
 if __name__ == "__main__":
     mostrar_menu()
