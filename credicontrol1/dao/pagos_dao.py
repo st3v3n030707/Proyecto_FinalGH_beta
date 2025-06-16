@@ -10,7 +10,7 @@ def registrar_pago(pago):
     prestamo = prestamos_dao.buscar_prestamo(pago.id_prestamo)
 
     if prestamo:
-        # Calcular fecha límite del primer pago según frecuencia
+      
         fecha_inicio = datetime.strptime(prestamo.fecha_prestamo, "%d-%m-%Y")
         if prestamo.frecuencia_pago.lower() == "mensual":
             dias_plazo = 30
@@ -19,7 +19,7 @@ def registrar_pago(pago):
         elif prestamo.frecuencia_pago.lower() == "semanal":
             dias_plazo = 7
         else:
-            dias_plazo = 30  # por defecto
+            dias_plazo = 30 
 
         fecha_limite = fecha_inicio + timedelta(days=dias_plazo)
         fecha_pago = datetime.strptime(pago.fecha, "%d-%m-%Y")
@@ -31,7 +31,7 @@ def registrar_pago(pago):
 
     pagos.append(pago)
     guardar_en_archivo(RUTA_PAGOS, pagos)
-    prestamos_dao.actualizar_estado_prestamos()  # ✅ Esto lo necesitás
+    prestamos_dao.actualizar_estado_prestamos() 
 
 def listar_pagos():
     return pagos
