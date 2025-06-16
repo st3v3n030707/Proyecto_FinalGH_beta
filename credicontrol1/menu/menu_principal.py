@@ -1,5 +1,3 @@
-import os
-
 from credicontrol1.modulo.cliente import Cliente
 from credicontrol1.modulo.prestamo import Prestamo
 from credicontrol1.modulo.pago import Pago
@@ -8,7 +6,6 @@ from credicontrol1.dao import clientes_dao, prestamos_dao, pagos_dao
 
 def mostrar_menu():
     while True:
-        print("\nMENU\n------------")
         print("1. Registrar Cliente")
         print("2. Crear Préstamo")
         print("3. Registrar Pago")
@@ -19,12 +16,10 @@ def mostrar_menu():
         print("8. Eliminar Préstamo")
         print("9. Eliminar Pago")
         print("10. Ver Detalles de un Préstamo")
-        print("11. Salir\n------------")
+        print("11. Salir")
 
 
-        opcion = input("\nSeleccione una opción: ")
-
-        os.system('cls | clear')
+        opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
             id_cliente = input("ID Cliente: ")
