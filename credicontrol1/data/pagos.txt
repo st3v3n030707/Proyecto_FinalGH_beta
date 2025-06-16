@@ -1,3 +1,5 @@
 pago carro|carro|300.0|10-01-2025
 carro pago |carro|300.0|20-01-2025
 carro pago|carro|500.0|22-01-2025
+pago carroD|carroD|1000.0|10-07-2025
+pago carroD|carroD|1300.0|08-08-2025

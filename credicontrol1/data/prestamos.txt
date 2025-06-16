@@ -1,2 +1,3 @@
 carro|01|1000.0|10.0|2|semanal|01-01-2025|Pagado
 trx4|01|1000.0|10.0|2|semanal|01-02-2025|Activo
+carroD|05|2000.0|10.0|2|mensual|16-06-2025|Pagado
