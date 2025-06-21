@@ -6,9 +6,7 @@ from credicontrol1.dao import clientes_dao, prestamos_dao, pagos_dao
 
 def mostrar_menu():
     while True:
-        os.system('cls' if os.name == 'nt' else 'clear')  # Limpia la pantalla en Windows o Unix
-        # Encabezado simple y claro
-        print("=====================================")
+        os.system('cls' if os.name == 'nt' else 'clear')  
         print("  SISTEMA DE GESTIÓN DE CRÉDITOS  ")
         print("=====================================")
         print("\nOpciones disponibles:")
@@ -28,16 +26,17 @@ def mostrar_menu():
 
         opcion = input("\nSeleccione una opción (1-11): ")
 
-        os.system('cls' if os.name == 'nt' else 'clear')
 
         if opcion == "1":
             print("=== Registrar Cliente ===")
-            id_cliente = input("ID Cliente: ")
-            nombre = input("Nombre: ")
-            cliente = Cliente(id_cliente, nombre)
-            clientes_dao.registrar_cliente(cliente)
-            print("Cliente registrado exitosamente.")
+            id_cliente = input("ID Cliente: ").strip()
+            nombre = input("Nombre: ").strip()
+
+            if not id_cliente or not nombre:
+             print("⚠️ Ingrese datos válidos. No se permiten campos vacíos.")
             input("\nPresione Enter para continuar...")
+            continue
+
 
         elif opcion == "2":
             print("=== Crear Préstamo ===")
@@ -46,11 +45,27 @@ def mostrar_menu():
             monto = input("Monto: ")
             interes = input("Tasa interés (%): ")
             cuotas = input("Número de cuotas: ")
+
+            if not (id_prestamo and id_cliente and monto and interes and cuotas):
+                print("⚠️ Ingrese datos válidos. No se permiten campos vacíos.")
+                input("\nPresione Enter para continuar...")
+                continue
+
+            try:
+                monto = float(monto)
+                interes = float(interes)
+                cuotas = int(cuotas)
+            except ValueError:
+                print("⚠️ Error: Monto, interés y cuotas deben ser numéricos.")
+                input("\nPresione Enter para continuar...")
+                continue
+
             print("\nFrecuencia de pago:")
             print("1. Semanal")
             print("2. Quincenal")
             print("3. Mensual")
             frecuencia_opcion = input("Seleccione (1/2/3): ")
+
             if frecuencia_opcion == "1":
                 frecuencia = "semanal"
             elif frecuencia_opcion == "2":
@@ -59,22 +74,38 @@ def mostrar_menu():
                 frecuencia = "mensual"
             else:
                 frecuencia = "mensual"
+
             fecha_prestamo = input("Fecha del préstamo (dd-mm-aaaa): ")
+            if not fecha_prestamo:
+                print("⚠️ Debe ingresar una fecha válida.")
+                input("\nPresione Enter para continuar...")
+                continue
+
             prestamo = Prestamo(id_prestamo, id_cliente, monto, interes, cuotas, frecuencia, fecha_prestamo)
             prestamos_dao.crear_prestamo(prestamo)
-            print("Préstamo creado exitosamente.")
+            print("✅ Préstamo creado exitosamente.")
             input("\nPresione Enter para continuar...")
+
 
         elif opcion == "3":
             print("=== Registrar Pago ===")
-            id_pago = input("ID Pago: ")
-            id_prestamo = input("ID Préstamo: ")
-            monto_pagado = input("Monto pagado: ")
-            fecha = input("Fecha (dd-mm-aaaa): ")
-            pago = Pago(id_pago, id_prestamo, monto_pagado, fecha)
-            pagos_dao.registrar_pago(pago)
-            print("Pago registrado exitosamente.")
-            input("\nPresione Enter para continuar...")
+            id_pago = input("ID Pago: ").strip()
+            id_prestamo = input("ID Préstamo: ").strip()
+            monto_pagado = input("Monto pagado: ").strip()
+            fecha = input("Fecha (dd-mm-aaaa): ").strip()
+
+            if not (id_pago and id_prestamo and monto_pagado and fecha):
+                print("⚠️ Ingrese datos válidos. No se permiten campos vacíos.")
+                input("\nPresione Enter para continuar...")
+                continue
+
+            try:
+                monto_pagado = float(monto_pagado)
+            except ValueError:
+                print("⚠️ Error: El monto pagado debe ser un número.")
+                input("\nPresione Enter para continuar...")
+                continue
+
 
         elif opcion == "4":
             print("=== Lista de Clientes ===")
