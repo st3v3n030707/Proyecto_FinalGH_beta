@@ -21,6 +21,6 @@ def leer_desde_archivo(nombre_archivo, clase):
                 objeto = clase(*valores)
                 lista.append(objeto)
             except TypeError:
-                print(f"⚠️ Error al cargar: {valores} — estructura inválida")
+                print(f"Error al cargar: {valores} — estructura inválida")
     return lista
 

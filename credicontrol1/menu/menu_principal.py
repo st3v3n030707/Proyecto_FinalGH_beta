@@ -3,6 +3,7 @@ from credicontrol1.modulo.cliente import Cliente
 from credicontrol1.modulo.prestamo import Prestamo
 from credicontrol1.modulo.pago import Pago
 from credicontrol1.dao import clientes_dao, prestamos_dao, pagos_dao
+from credicontrol1.menu.login import login
 
 def mostrar_menu():
     while True:
@@ -33,7 +34,7 @@ def mostrar_menu():
             nombre = input("Nombre: ").strip()
 
             if not id_cliente or not nombre:
-             print("⚠️ Ingrese datos válidos. No se permiten campos vacíos.")
+             print("Ingrese datos válidos. No se permiten campos vacíos.")
             input("\nPresione Enter para continuar...")
             continue
 
@@ -47,7 +48,7 @@ def mostrar_menu():
             cuotas = input("Número de cuotas: ")
 
             if not (id_prestamo and id_cliente and monto and interes and cuotas):
-                print("⚠️ Ingrese datos válidos. No se permiten campos vacíos.")
+                print("Ingrese datos válidos. No se permiten campos vacíos.")
                 input("\nPresione Enter para continuar...")
                 continue
 
@@ -56,7 +57,7 @@ def mostrar_menu():
                 interes = float(interes)
                 cuotas = int(cuotas)
             except ValueError:
-                print("⚠️ Error: Monto, interés y cuotas deben ser numéricos.")
+                print("Error: Monto, interés y cuotas deben ser numéricos.")
                 input("\nPresione Enter para continuar...")
                 continue
 
@@ -77,13 +78,13 @@ def mostrar_menu():
 
             fecha_prestamo = input("Fecha del préstamo (dd-mm-aaaa): ")
             if not fecha_prestamo:
-                print("⚠️ Debe ingresar una fecha válida.")
+                print("Debe ingresar una fecha válida.")
                 input("\nPresione Enter para continuar...")
                 continue
 
             prestamo = Prestamo(id_prestamo, id_cliente, monto, interes, cuotas, frecuencia, fecha_prestamo)
             prestamos_dao.crear_prestamo(prestamo)
-            print("✅ Préstamo creado exitosamente.")
+            print("Préstamo creado exitosamente.")
             input("\nPresione Enter para continuar...")
 
 
@@ -95,14 +96,14 @@ def mostrar_menu():
             fecha = input("Fecha (dd-mm-aaaa): ").strip()
 
             if not (id_pago and id_prestamo and monto_pagado and fecha):
-                print("⚠️ Ingrese datos válidos. No se permiten campos vacíos.")
+                print("Ingrese datos válidos. No se permiten campos vacíos.")
                 input("\nPresione Enter para continuar...")
                 continue
 
             try:
                 monto_pagado = float(monto_pagado)
             except ValueError:
-                print("⚠️ Error: El monto pagado debe ser un número.")
+                print("Error: El monto pagado debe ser un número.")
                 input("\nPresione Enter para continuar...")
                 continue
 
@@ -207,5 +208,7 @@ def mostrar_menu():
             print("Opción no válida. Por favor, seleccione una opción entre 1 y 11.")
             input("\nPresione Enter para continuar...")
 
+
 if __name__ == "__main__":
-    mostrar_menu()
+    if login():
+        mostrar_menu()

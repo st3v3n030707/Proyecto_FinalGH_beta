@@ -26,7 +26,7 @@ def registrar_pago(pago):
 
         if fecha_pago > fecha_limite:
             mora = prestamo.monto * 0.05  # 5% de mora
-            print(f"⚠️ Pago atrasado. Se aplicará una mora de C${mora:.2f}.")
+            print(f" Pago atrasado. Se aplicará una mora de C${mora:.2f}.")
             pago.monto_pagado += mora
 
     pagos.append(pago)
