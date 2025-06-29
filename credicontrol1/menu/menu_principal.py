@@ -1,14 +1,15 @@
-import os
-from credicontrol1.modulo.cliente import Cliente
-from credicontrol1.modulo.prestamo import Prestamo
-from credicontrol1.modulo.pago import Pago
-from credicontrol1.dao import clientes_dao, prestamos_dao, pagos_dao
-from credicontrol1.menu.login import login
-from credicontrol1.modulo.limpiar_pantalla import limpiar_pantalla
+import os # Importa el módulo os que permite ejecutar comandos del sistema 
+from credicontrol1.modulo.cliente import Cliente # Importa la clase Cliente desde el módulo correspondiente para registrar nuevos clientes
+from credicontrol1.modulo.prestamo import Prestamo # Importa la clase Prestamo para crear objetos de préstamo y asociarlos a clientes existentes
+from credicontrol1.modulo.pago import Pago # Importa la clase Pago para registrar los pagos realizados por los clientes
+from credicontrol1.dao import clientes_dao, prestamos_dao, pagos_dao # Importa los módulos DAO que permiten registrar, eliminar, buscar y listar datos guardados en archivos
+from credicontrol1.menu.login import login # Importa la función login que se usa para controlar el acceso al sistema
+from credicontrol1.modulo.limpiar_pantalla import limpiar_pantalla # Importa la función que limpia la pantalla de la consola.
 
+# Esta función muestra el menú principal del sistema y gestiona todas las opciones
 def mostrar_menu():
     while True:
-        limpiar_pantalla()
+        limpiar_pantalla()  # Limpia la pantalla al iniciar cada iteración del menú
         print("=====================================")
         print("  SISTEMA DE GESTIÓN DE CRÉDITOS  ")
         print("=====================================")
@@ -30,6 +31,7 @@ def mostrar_menu():
         opcion = input("\nSeleccione una opción (1-11): ")
         limpiar_pantalla()
 
+        # opcion 1: Registrar cliente 
         if opcion == "1":
             print("=== Registrar Cliente ===")
             id_cliente = input("ID Cliente: ").strip()
@@ -45,7 +47,8 @@ def mostrar_menu():
             input("\nPresione Enter para continuar...")
             limpiar_pantalla()
             continue
-
+        
+                             #opcion 2: crear prestamo
         elif opcion == "2":
             print("=== Crear Préstamo ===")
             id_prestamo = input("ID Préstamo: ")
@@ -70,7 +73,7 @@ def mostrar_menu():
                 limpiar_pantalla()
                 continue
 
-            print("\nFrecuencia de pago:")
+            print("\nFrecuencia de pago:") #frecuencia de pago
             print("1.	Semanal")
             print("2.	Quincenal")
             print("3.	Mensual")
@@ -83,7 +86,7 @@ def mostrar_menu():
             elif frecuencia_opcion == "3":
                 frecuencia = "mensual"
             else:
-                frecuencia = "mensual"
+                frecuencia = "mensual" #valor por defecto
 
             fecha_prestamo = input("Fecha del préstamo (dd-mm-aaaa): ")
             if not fecha_prestamo:
@@ -98,6 +101,7 @@ def mostrar_menu():
             input("\nPresione Enter para continuar...")
             limpiar_pantalla()
 
+                            #opcion 3 :registrar pago
         elif opcion == "3":
             print("=== Registrar Pago ===")
             id_pago = input("ID Pago: ").strip()
@@ -126,6 +130,7 @@ def mostrar_menu():
             input("\nPresione Enter para continuar...")
             limpiar_pantalla()
 
+                            #opcion 4 :ver clientes
         elif opcion == "4":
             print("=== Lista de Clientes ===")
             clientes = clientes_dao.listar_clientes()
@@ -137,6 +142,7 @@ def mostrar_menu():
             input("\nPresione Enter para continuar...")
             limpiar_pantalla()
 
+                    #opcion 5: ver prestamos.
         elif opcion == "5":
             print("=== Lista de Préstamos ===")
             prestamos = prestamos_dao.listar_prestamos()
@@ -148,6 +154,7 @@ def mostrar_menu():
             input("\nPresione Enter para continuar...")
             limpiar_pantalla()
 
+                    #opcion 6: ver pagos
         elif opcion == "6":
             print("=== Lista de Pagos ===")
             pagos = pagos_dao.listar_pagos()
@@ -159,6 +166,7 @@ def mostrar_menu():
             input("\nPresione Enter para continuar...")
             limpiar_pantalla()
 
+                        #opcion 7: eliminar cliente.
         elif opcion == "7":
             print("=== Eliminar Cliente ===")
             clientes = clientes_dao.listar_clientes()
@@ -173,6 +181,7 @@ def mostrar_menu():
             input("\nPresione Enter para continuar...")
             limpiar_pantalla()
 
+                            #opcion 8:Eliminar prestamo.
         elif opcion == "8":
             print("=== Eliminar Préstamo ===")
             prestamos = prestamos_dao.listar_prestamos()
@@ -187,6 +196,7 @@ def mostrar_menu():
             input("\nPresione Enter para continuar...")
             limpiar_pantalla()
 
+                            #opcion 9: Eliminar pago
         elif opcion == "9":
             print("=== Eliminar Pago ===")
             pagos = pagos_dao.listar_pagos()
@@ -201,6 +211,7 @@ def mostrar_menu():
             input("\nPresione Enter para continuar...")
             limpiar_pantalla()
 
+                            #opcion 10: ver detalles del prestamo.
         elif opcion == "10":
             print("=== Detalles de Préstamo ===")
             id_prestamo = input("Ingrese el ID del préstamo: ")
@@ -225,17 +236,19 @@ def mostrar_menu():
             input("\nPresione Enter para continuar...")
             limpiar_pantalla()
 
+                            #opcion 11:Salir del sistema.
         elif opcion == "11":
             print("Saliendo del sistema...")
             input("\nPresione Enter para cerrar...")
             limpiar_pantalla()
             break
 
-        else:
+        else:  # Si el usuario escribe una opción no válida
             print("Opción no válida. Por favor, seleccione una opción entre 1 y 11.")
             input("\nPresione Enter para continuar...")
             limpiar_pantalla()
 
-if __name__  == "_main_":
+
+if __name__  == "_main_":  # Inicia el sistema solo si el login es exitoso
     if login():
         mostrar_menu()
