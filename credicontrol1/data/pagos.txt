@@ -1,0 +1,2 @@
+pago carro|carro|550.0|06-01-2025
+carro pago|carro|600.0|13-01-2025

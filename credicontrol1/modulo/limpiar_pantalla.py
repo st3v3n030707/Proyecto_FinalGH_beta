@@ -1,4 +1,7 @@
 import os
-
+import platform
 def limpiar_pantalla():
-    os.system('cls | clear')
+    if platform.system() == 'Windows':
+        os.system('cls')
+    else:
+        os.system('clear')
