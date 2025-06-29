@@ -236,6 +236,6 @@ def mostrar_menu():
             input("\nPresione Enter para continuar...")
             limpiar_pantalla()
 
-if _name_ == "_main_":
+if __name__  == "_main_":
     if login():
         mostrar_menu()
