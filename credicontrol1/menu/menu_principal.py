@@ -1,51 +1,51 @@
-# Importa módulos necesarios
 import os
 from credicontrol1.modulo.cliente import Cliente
 from credicontrol1.modulo.prestamo import Prestamo
 from credicontrol1.modulo.pago import Pago
 from credicontrol1.dao import clientes_dao, prestamos_dao, pagos_dao
 from credicontrol1.menu.login import login
+from credicontrol1.modulo.limpiar_pantalla import limpiar_pantalla
 
-# Función principal que muestra el menú y controla todo el flujo del sistema
 def mostrar_menu():
     while True:
-        # Limpia la consola
-        os.system('cls' if os.name == 'nt' else 'clear') 
-
-        # Menú de opciones
+        limpiar_pantalla()
+        print("=====================================")
         print("  SISTEMA DE GESTIÓN DE CRÉDITOS  ")
         print("=====================================")
         print("\nOpciones disponibles:")
         print("---------------------")
-        print("1. Registrar Cliente")
-        print("2. Crear Préstamo")
-        print("3. Registrar Pago")
-        print("4. Ver Clientes")
-        print("5. Ver Préstamos")
-        print("6. Ver Pagos")
-        print("7. Eliminar Cliente")
-        print("8. Eliminar Préstamo")
-        print("9. Eliminar Pago")
-        print("10. Ver Detalles de un Préstamo")
-        print("11. Salir")
+        print("1.	Registrar Cliente")
+        print("2.	Crear Préstamo")
+        print("3.	Registrar Pago")
+        print("4.	Ver Clientes")
+        print("5.	Ver Préstamos")
+        print("6.	Ver Pagos")
+        print("7.	Eliminar Cliente")
+        print("8.	Eliminar Préstamo")
+        print("9.	Eliminar Pago")
+        print("10.	Ver Detalles de un Préstamo")
+        print("11.	Salir")
         print("---------------------")
 
-        # Captura la opción del usuario
         opcion = input("\nSeleccione una opción (1-11): ")
+        limpiar_pantalla()
 
-        # Opción 1: Registrar cliente
         if opcion == "1":
             print("=== Registrar Cliente ===")
             id_cliente = input("ID Cliente: ").strip()
             nombre = input("Nombre: ").strip()
 
-        # Validación de campos vacíos
             if not id_cliente or not nombre:
-             print("Ingrese datos válidos. No se permiten campos vacíos.")
+                print("Ingrese datos válidos. No se permiten campos vacíos.")
+            else:
+                cliente = Cliente(id_cliente, nombre)
+                clientes_dao.registrar_cliente(cliente)
+                print("Cliente registrado exitosamente.")
+
             input("\nPresione Enter para continuar...")
+            limpiar_pantalla()
             continue
 
-        # Opción 2: Crear préstamo
         elif opcion == "2":
             print("=== Crear Préstamo ===")
             id_prestamo = input("ID Préstamo: ")
@@ -57,6 +57,7 @@ def mostrar_menu():
             if not (id_prestamo and id_cliente and monto and interes and cuotas):
                 print("Ingrese datos válidos. No se permiten campos vacíos.")
                 input("\nPresione Enter para continuar...")
+                limpiar_pantalla()
                 continue
 
             try:
@@ -66,14 +67,13 @@ def mostrar_menu():
             except ValueError:
                 print("Error: Monto, interés y cuotas deben ser numéricos.")
                 input("\nPresione Enter para continuar...")
+                limpiar_pantalla()
                 continue
 
-
-            # Selección de frecuencia de pago
             print("\nFrecuencia de pago:")
-            print("1. Semanal")
-            print("2. Quincenal")
-            print("3. Mensual")
+            print("1.	Semanal")
+            print("2.	Quincenal")
+            print("3.	Mensual")
             frecuencia_opcion = input("Seleccione (1/2/3): ")
 
             if frecuencia_opcion == "1":
@@ -83,21 +83,21 @@ def mostrar_menu():
             elif frecuencia_opcion == "3":
                 frecuencia = "mensual"
             else:
-                frecuencia = "mensual"  # Valor por defecto
+                frecuencia = "mensual"
 
             fecha_prestamo = input("Fecha del préstamo (dd-mm-aaaa): ")
             if not fecha_prestamo:
                 print("Debe ingresar una fecha válida.")
                 input("\nPresione Enter para continuar...")
+                limpiar_pantalla()
                 continue
 
-            # Crea el préstamo y lo guarda
             prestamo = Prestamo(id_prestamo, id_cliente, monto, interes, cuotas, frecuencia, fecha_prestamo)
             prestamos_dao.crear_prestamo(prestamo)
             print("Préstamo creado exitosamente.")
             input("\nPresione Enter para continuar...")
+            limpiar_pantalla()
 
-        # Opción 3: Registrar pago
         elif opcion == "3":
             print("=== Registrar Pago ===")
             id_pago = input("ID Pago: ").strip()
@@ -108,6 +108,7 @@ def mostrar_menu():
             if not (id_pago and id_prestamo and monto_pagado and fecha):
                 print("Ingrese datos válidos. No se permiten campos vacíos.")
                 input("\nPresione Enter para continuar...")
+                limpiar_pantalla()
                 continue
 
             try:
@@ -115,10 +116,16 @@ def mostrar_menu():
             except ValueError:
                 print("Error: El monto pagado debe ser un número.")
                 input("\nPresione Enter para continuar...")
+                limpiar_pantalla()
                 continue
 
+            pago = Pago(id_pago, id_prestamo, monto_pagado, fecha)
+            pagos_dao.registrar_pago(pago)
 
-        # Opción 4: Ver clientes
+            print("Pago ingresado exitosamente.")
+            input("\nPresione Enter para continuar...")
+            limpiar_pantalla()
+
         elif opcion == "4":
             print("=== Lista de Clientes ===")
             clientes = clientes_dao.listar_clientes()
@@ -128,9 +135,8 @@ def mostrar_menu():
             else:
                 print("No hay clientes registrados.")
             input("\nPresione Enter para continuar...")
+            limpiar_pantalla()
 
-
-        # Opción 5: Ver préstamos
         elif opcion == "5":
             print("=== Lista de Préstamos ===")
             prestamos = prestamos_dao.listar_prestamos()
@@ -140,9 +146,8 @@ def mostrar_menu():
             else:
                 print("No hay préstamos registrados.")
             input("\nPresione Enter para continuar...")
+            limpiar_pantalla()
 
-
-        # Opción 6: Ver pagos
         elif opcion == "6":
             print("=== Lista de Pagos ===")
             pagos = pagos_dao.listar_pagos()
@@ -152,8 +157,8 @@ def mostrar_menu():
             else:
                 print("No hay pagos registrados.")
             input("\nPresione Enter para continuar...")
+            limpiar_pantalla()
 
-        # Opción 7: Eliminar cliente
         elif opcion == "7":
             print("=== Eliminar Cliente ===")
             clientes = clientes_dao.listar_clientes()
@@ -166,8 +171,8 @@ def mostrar_menu():
             else:
                 print("No hay clientes registrados.")
             input("\nPresione Enter para continuar...")
+            limpiar_pantalla()
 
-        # Opción 8: Eliminar préstamo
         elif opcion == "8":
             print("=== Eliminar Préstamo ===")
             prestamos = prestamos_dao.listar_prestamos()
@@ -180,9 +185,8 @@ def mostrar_menu():
             else:
                 print("No hay préstamos registrados.")
             input("\nPresione Enter para continuar...")
+            limpiar_pantalla()
 
-
-        # Opción 9: Eliminar pago
         elif opcion == "9":
             print("=== Eliminar Pago ===")
             pagos = pagos_dao.listar_pagos()
@@ -195,8 +199,8 @@ def mostrar_menu():
             else:
                 print("No hay pagos registrados.")
             input("\nPresione Enter para continuar...")
+            limpiar_pantalla()
 
-        # Opción 10: Ver detalles de un préstamo
         elif opcion == "10":
             print("=== Detalles de Préstamo ===")
             id_prestamo = input("Ingrese el ID del préstamo: ")
@@ -219,19 +223,19 @@ def mostrar_menu():
             else:
                 print("Préstamo no encontrado.")
             input("\nPresione Enter para continuar...")
+            limpiar_pantalla()
 
-
-        # Opción 11: Salir del sistema
         elif opcion == "11":
             print("Saliendo del sistema...")
+            input("\nPresione Enter para cerrar...")
+            limpiar_pantalla()
             break
 
-        # Opción inválida
         else:
             print("Opción no válida. Por favor, seleccione una opción entre 1 y 11.")
             input("\nPresione Enter para continuar...")
+            limpiar_pantalla()
 
-# Si se ejecuta directamente este archivo, primero hace login y luego muestra el menú
-if __name__ == "__main__":
+if _name_ == "_main_":
     if login():
         mostrar_menu()
