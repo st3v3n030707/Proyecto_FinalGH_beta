@@ -6,6 +6,6 @@ class Prestamo:
         self.tasa_interes = float(tasa_interes)
         self.cuotas = int(cuotas)
         self.frecuencia_pago = frecuencia_pago
-        self.fecha_prestamo = fecha_prestamo  # Nueva línea
+        self.fecha_prestamo = fecha_prestamo  
         self.estado = estado
 
