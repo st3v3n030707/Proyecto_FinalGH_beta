@@ -4,7 +4,7 @@ from credicontrol1.modulo.prestamo import Prestamo # Importa la clase Prestamo p
 from credicontrol1.modulo.pago import Pago # Importa la clase Pago para registrar los pagos realizados por los clientes
 from credicontrol1.dao import clientes_dao, prestamos_dao, pagos_dao # Importa los módulos DAO que permiten registrar, eliminar, buscar y listar datos guardados en archivos
 from credicontrol1.menu.login import login # Importa la función login que se usa para controlar el acceso al sistema
-from credicontrol1.modulo.limpiar_pantalla import limpiar_pantalla # Importa la función que limpia la pantalla de la consola.
+from credicontrol1.menu.limpiar_pantalla import limpiar_pantalla # Importa la función que limpia la pantalla de la consola.
 
 # Esta función muestra el menú principal del sistema y gestiona todas las opciones
 def mostrar_menu():

@@ -1,6 +1,6 @@
 # Importa la librería pwinput para ocultar la contraseña mientras se escribe
 import pwinput
-from credicontrol1.modulo.limpiar_pantalla import limpiar_pantalla
+from credicontrol1.menu.limpiar_pantalla import limpiar_pantalla
 
 # Ruta del archivo que contiene los usuarios registrados
 RUTA_USUARIOS = "credicontrol1/data/usuarios.txt"
