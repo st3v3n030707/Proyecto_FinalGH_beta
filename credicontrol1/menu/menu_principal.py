@@ -67,8 +67,16 @@ def mostrar_menu():
                 monto = float(monto)
                 interes = float(interes)
                 cuotas = int(cuotas)
+
+                if not all([
+                    monto > 0 and monto != float('inf'),
+                    interes > 0 and interes != float('inf'),
+                    cuotas > 0
+                ]):
+                    raise ValueError
+
             except ValueError:
-                print("Error: Monto, interés y cuotas deben ser numéricos.")
+                print("\nError: Monto, interés y cuotas deben ser números positivos válidos (no letras, negativos ni 'inf').")
                 input("\nPresione Enter para continuar...")
                 limpiar_pantalla()
                 continue
