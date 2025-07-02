@@ -1,5 +1,7 @@
 # Importa la librería pwinput para ocultar la contraseña mientras se escribe
 import pwinput
+
+#Funcion para crear los usuarios guardados 
 from credicontrol1.menu.limpiar_pantalla import limpiar_pantalla
 
 # Ruta del archivo que contiene los usuarios registrados
