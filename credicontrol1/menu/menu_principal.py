@@ -136,7 +136,14 @@ def mostrar_menu():
             try:# Intenta convertir el monto pagado a un número de punto flotante
                 monto_pagado = float(monto_pagado)# Convierte el monto pagado a un número de punto flotante.
             
-            
+                     # Verificamos si es infinito
+                if monto_pagado == float('inf') or monto_pagado == float('-inf'):
+                    raise ValueError("El monto no puede ser infinito.")
+
+                # Verificamos si es negativo
+                if monto_pagado <= 0:
+                    raise ValueError("El monto debe ser mayor a cero.")
+
             except ValueError: # Si ocurre un error al convertir el monto pagado, imprime un mensaje de error.
                 print("Error: El monto pagado debe ser un número.")
                 input("\nPresione Enter para continuar...")
