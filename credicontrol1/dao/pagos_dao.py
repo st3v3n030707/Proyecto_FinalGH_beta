@@ -14,27 +14,35 @@ pagos = leer_desde_archivo(RUTA_PAGOS, Pago) #carga los pagos previamente almace
 def registrar_pago(pago): #Define una funcion para registar un nuevo pago.
     prestamo = prestamos_dao.buscar_prestamo(pago.id_prestamo) #Busca el prestamo asociado al pago por su ID.
 
-    if prestamo: #Si el prestamo existe:
-        # Calcula la fecha límite de pago según la frecuencia
-        fecha_inicio = datetime.strptime(prestamo.fecha_prestamo, "%d-%m-%Y") #Convierte la fecha del prestamo a tipo datetime.
-        if prestamo.frecuencia_pago.lower() == "mensual": #Determina el plazo de pago segun la frecuencia.
+    if prestamo:
+        fecha_inicio = datetime.strptime(prestamo.fecha_prestamo, "%d-%m-%Y")
+
+            # Determina días por cada frecuencia
+        if prestamo.frecuencia_pago.lower() == "mensual":
             dias_plazo = 30
         elif prestamo.frecuencia_pago.lower() == "quincenal":
             dias_plazo = 15
         elif prestamo.frecuencia_pago.lower() == "semanal":
             dias_plazo = 7
         else:
-            dias_plazo = 30 # Valor por defecto , 30 dias si no se especifica una frecuencia valida.
+            dias_plazo = 30  # Valor por defecto
 
-        fecha_limite = fecha_inicio + timedelta(days=dias_plazo) #Calcula la fecha limite para el primer pago.
-        fecha_pago = datetime.strptime(pago.fecha, "%d-%m-%Y") #Convierte la fecha del pago a datetime.
+            # Número de pagos anteriores ya registrados
+        pagos_anteriores = pagos_por_prestamo(pago.id_prestamo)
+        cantidad_pagos = len(pagos_anteriores)
 
+            # Calcula la fecha límite esperada para el siguiente pago
+        fecha_limite = fecha_inicio + timedelta(days=dias_plazo * (cantidad_pagos + 1))
 
-        # Aplica mora si el pago es tardío
-        if fecha_pago > fecha_limite: # si el pago se realizo despues de la fecha limite:
-            mora = prestamo.monto * 0.05  # se aplicara una mora del 5% sobre el monto original del prestamo.
-            print(f" Pago atrasado. Se aplicará una mora de C${mora:.2f}.") # Muestra mensaje al usuario.
-            pago.monto_pagado += mora # suma la mora al monto pagado.
+            #  Convierte la fecha actual del pago
+        fecha_pago = datetime.strptime(pago.fecha, "%d-%m-%Y")
+
+            #  Aplica mora solo si el pago está atrasado
+        if fecha_pago > fecha_limite:
+            mora = prestamo.monto * 0.05  # 5% de mora
+            print(f"⚠️ Pago atrasado. Se aplicará una mora de C${mora:.2f}.")
+            pago.monto_pagado += mora
+
 
     # Guarda el pago y actualiza estado
     pagos.append(pago) #agrega el nuevo pago a la lista. 
